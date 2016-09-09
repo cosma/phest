@@ -1,0 +1,32 @@
+{
+    "name": "cosma/phest",
+    "type": "library",
+    "description": "Phest = Phalcon + Test",
+    "keywords": ["Phalcon", "phpunit", "functional test", "unit test"],
+    "homepage": "https://github.com/cosma/phest",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cosmin Voicu",
+            "email": "cosmin.voicu@gmail.com",
+            "homepage": "https://github.com/cosma"
+        }
+    ],
+    "require": {
+        "php": "^5.6 || ^7.0",
+        "phpunit/phpunit": "5.*",
+        "mockery/mockery": "0.9.*"
+    },
+    "require-dev": {
+
+    },
+    "autoload": {
+        "psr-4": { "Cosma\\Phest\\": "" }
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.0.x-dev"
+        }
+    }
+}
