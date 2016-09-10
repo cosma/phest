@@ -12,6 +12,7 @@ machine:
 dependencies:
   pre:
     - sed -i 's/^;//' /opt/circleci/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
+    - sed -i 's/^;//' /opt/circleci/.phpenv/versions/$(phpenv global)/etc/conf.d/phalcon.ini
 
   cache_directories:
     - "vendor"
