@@ -75,7 +75,7 @@ abstract class UnitTestCase extends \PHPUnit_Framework_TestCase
             } catch (\Exception $exception) {
             }
         }
-        if ($exception) {
+        if (isset($exception) && $exception) {
             throw $exception;
         }
     }

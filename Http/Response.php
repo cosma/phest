@@ -1,10 +1,9 @@
 <?php
-namespace Cosma\Http;
+namespace Cosma\Phest\Http;
 
+use \Phalcon\Http\Response as OverwrittenResponse;
 
-use \Phalcon\Http\Response as BaseResponse;
-
-class Response extends BaseResponse
+class Response extends OverwrittenResponse
 {
     /**
      * @return $this

@@ -2,6 +2,7 @@
 
 namespace Cosma\Phest\TestCase;
 
+use Phalcon\Di;
 use Phalcon\DiInterface;
 use Phalcon\DI\ServiceInterface;
 use Phalcon\Config;
@@ -61,8 +62,8 @@ abstract class WebTestCase extends UnitTestCase
         $this->setParameters($requestMethod, $parameters);
         $this->setHeaders($headers);
 
-        /** @var \Phalcon\Mvc\Micro $app */
-        $app = DI::getDefault()->get('testApp');
+        /** @var \Phalcon\Mvc\Micro|\Phalcon\Mvc\Application $app */
+        $app = Di::getDefault()->get('_testApp');
         $app->handle($url);
 
         return $app->response;
@@ -70,12 +71,13 @@ abstract class WebTestCase extends UnitTestCase
 
     /**
      * @param $serviceName
-     * @param $mockedService
+     * @param $mock
+     *
      * @return ServiceInterface
      */
     protected function mockService($serviceName, $mock)
     {
-        return DI::getDefault()->set($serviceName, $mock);
+        return Di::getDefault()->set($serviceName, $mock);
     }
 
     /**
