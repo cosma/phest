@@ -15,10 +15,11 @@ dependencies:
     - sudo apt-get update
     - sudo apt-get install php5-dev php5-mysql gcc libpcre3-dev
     - git clone --depth=1 --branch phalcon-v2.0.13 git://github.com/phalcon/cphalcon.git
-    - cd cphalcon-master/build/64bits && make clean
+    - cd phest/cphalcon/build/64bits && make clean
+    - sudo apt-get install --reinstall language-pack-en-base && locale-gen en_US.UTF-8 && dpkg-reconfigure locales
     - phpize ./configure --with-php-config=/usr/local/php/bin/php-config
-    - cd cphalcon-master/build/64bits && make && make install
-    - cd cphalcon/build && sudo ./install
+    - cd phest/cphalcon/build/64bits && make && make install
+    - cd phest/cphalcon/build && sudo ./install
     - echo 'extension=/home/ubuntu/phest/cphalcon/build/64bits/modules/phalcon.so' | sudo tee -a /opt/circleci/php/$(phpenv global)/etc/php.ini
 
   cache_directories:
