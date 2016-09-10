@@ -12,6 +12,8 @@ machine:
 dependencies:
   pre:
     - sed -i 's/^;//' /opt/circleci/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
+    - bin/install-phalcon.sh phalcon-v2.0.13
+    - php -r "echo \Phalcon\Version::get();"
 #    - sudo apt-get update
 #    - sudo apt-get install php5-dev php5-mysql gcc libpcre3-dev
 #    - git clone --depth=1 --branch=v1.2.5  git://github.com/phalcon/cphalcon.git
@@ -22,9 +24,6 @@ dependencies:
 #    #- cd phest/cphalcon/build && sudo ./install
 #    - echo 'extension=/home/ubuntu/phest/cphalcon/build/64bits/modules/phalcon.so' | sudo tee -a /opt/circleci/php/$(phpenv global)/etc/php.ini
 
-  post:
-    - bin/install-phalcon.sh phalcon-v2.0.13
-    - php -r "echo \Phalcon\Version::get();"
 
   cache_directories:
     - vendor
