@@ -57,7 +57,7 @@ An example for [bootstrap.php](https://github.com/cosma/phest/blob/master/exampl
 
 ### 3. Add to phpunit configuration XML the bootstrap file
 ```xml
-# /path/to/phalcon/project/tests/phpunit.xml
+// /path/to/phalcon/project/tests/phpunit.xml
 <phpunit  .....
          bootstrap="path/tophalcon/project/bootstrap.php"
          .....
