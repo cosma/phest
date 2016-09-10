@@ -11,7 +11,7 @@ machine:
 
 dependencies:
   pre:
-#    - echo "zend_extension=xdebug.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+    - echo "zend_extension=xdebug.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
   cache_directories:
     - "vendor"
@@ -19,5 +19,5 @@ dependencies:
 test:
   override:
     - mkdir -p $CIRCLE_TEST_REPORTS/phpunit
-#    - vendor/bin/phpunit -c phpunit.xml.dist --coverage-text --log-junit $CIRCLE_TEST_REPORTS/phpunit/junit.xml
+    - vendor/bin/phpunit -c phpunit.xml.dist --coverage-text --log-junit $CIRCLE_TEST_REPORTS/phpunit/junit.xml
 
