@@ -13,7 +13,7 @@ fi
 
 CI_APP_DIR=${PWD}
 PHALCON_INSTALL_REF=${1:-master}
-PHALCON_DIR=${HOME}/cphalcon
+PHALCON_DIR=${CI_APP_DIR}/cphalcon
 PHALCON_CACHE_DIR=${PHALCON_DIR}/cache
 PHP_VER=$(phpenv version-name)
 PHP_ENV_DIR=$(dirname $(dirname $(which phpenv)))/versions/${PHP_VER}

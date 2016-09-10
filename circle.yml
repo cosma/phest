@@ -12,7 +12,7 @@ machine:
 dependencies:
   pre:
     - sed -i 's/^;//' /opt/circleci/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
-    - sudo bin/install-phalcon.sh phalcon-v2.0.13
+    - sh bin/install-phalcon.sh phalcon-v2.0.13
     - php -r "echo \Phalcon\Version::get();"
 #    - sudo apt-get update
 #    - sudo apt-get install php5-dev php5-mysql gcc libpcre3-dev
