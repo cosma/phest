@@ -14,12 +14,11 @@
     ],
     "require": {
         "php": "^5.6 || ^7.0",
-        "ext-phalcon": "^2.0",
         "phpunit/phpunit": "5.*",
         "mockery/mockery": "0.9.*"
     },
     "require-dev": {
-        "phalcon/zephir": "~0.9"
+        "techpivot/phalcon-ci-installer": "~1.0"
     },
     "bin": [
         "bin/install-phalcon.sh"
