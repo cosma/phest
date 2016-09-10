@@ -15,6 +15,7 @@ dependencies:
     - sudo apt-get update
     - sudo apt-get install php5-dev php5-mysql gcc libpcre3-dev
     - git clone --depth=1 --branch phalcon-v2.0.13 git://github.com/phalcon/cphalcon.git
+    - pwd
     - cd phest/cphalcon/build/64bits && sudo make clean
     - export LC_ALL="en_US.UTF-8"
     - sudo apt-get install --reinstall language-pack-en-base && locale-gen en_US.UTF-8 && dpkg-reconfigure locales
