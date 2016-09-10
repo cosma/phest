@@ -180,7 +180,7 @@ class SomeUnitTest extends UnitTestCase
 
 # Run Tests
 
-vendor/phpunit/phpunit/phpunit -c phpunit.xml.dist --coverage-text --coverage-html=Tests/coverage Tests
+vendor/bin/phpunit -c phpunit.xml.dist --coverage-text --coverage-html=Tests/coverage Tests
 
 # License
 
