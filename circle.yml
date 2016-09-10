@@ -11,7 +11,7 @@ machine:
 
 dependencies:
   pre:
-    - echo "zend_extension=xdebug.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+    - sed -i 's/^;//' /opt/circleci/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
 
   cache_directories:
     - "vendor"
