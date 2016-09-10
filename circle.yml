@@ -17,7 +17,9 @@ dependencies:
     - git clone --depth=1 git://github.com/phalcon/cphalcon.git
     - pwd
     - export LC_ALL="en_US.UTF-8"
-    - sudo apt-get install --reinstall language-pack-en-base && locale-gen en_US.UTF-8 && dpkg-reconfigure locales
+    - sudo apt-get install --reinstall language-pack-en-base
+    - sudo locale-gen en_US.UTF-8
+    - sudo dpkg-reconfigure locales
     - cd cphalcon/build/64bits && sudo phpize ./configure --with-php-config=/usr/local/php/bin/php-config
     - cd cphalcon/build/64bits && sudo make && make install
     #- cd phest/cphalcon/build && sudo ./install
