@@ -128,7 +128,7 @@ abstract class UnitTestCase extends \PHPUnit_Framework_TestCase
      *
      * @throws \PHPUnit_Framework_IncompleteTestError;
      */
-    protected function __destruct()
+    public function __destruct()
     {
         if (!$this->loaded) {
             throw new \PHPUnit_Framework_IncompleteTestError('Please run parent::setUp().');

@@ -1,4 +1,5 @@
-<?php/**
+<?php
+/**
  * This file is part of the "cosma/phest" project
  *
  * (c) Cosmin Voicu<cosmin.voicu@gmail.com>
