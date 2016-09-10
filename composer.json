@@ -21,9 +21,6 @@
     "require-dev": {
         "techpivot/phalcon-ci-installer": "~1.0"
     },
-    "bin": [
-        "bin/install-phalcon.sh"
-    ],
     "autoload": {
         "psr-4": { "Cosma\\Phest\\": "" }
     },
