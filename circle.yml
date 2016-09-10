@@ -18,7 +18,6 @@ dependencies:
   post:
       - vendor/bin/install-phalcon.sh phalcon-v2.0.13
       - php -r "echo \Phalcon\Version::get();"
-      - php -i | grep phalon
       - composer require ext-phalcon "^2.0"
 
   cache_directories:
