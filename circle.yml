@@ -13,7 +13,6 @@ dependencies:
   pre:
     - sed -i 's/^;//' /opt/circleci/.phpenv/versions/$(phpenv global)/etc/conf.d/xdebug.ini
     - composer remove ext-phalcon
-#    - echo 'extension=/home/ubuntu/phest/cphalcon/build/64bits/modules/phalcon.so' | sudo tee -a /opt/circleci/php/$(phpenv global)/etc/php.ini
 
   post:
       - vendor/bin/install-phalcon.sh phalcon-v2.0.13
