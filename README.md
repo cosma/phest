@@ -31,7 +31,6 @@ I recommend to use more stable version tags if available.
 ```php
 // /path/to/phalcon/project/tests/bootstrap.php
 
-<?php
  /**
  * Define TEST_PATH to point to path/to/phalcon/project/tests/
  */
@@ -59,8 +58,6 @@ An example for [bootstrap.php](https://github.com/cosma/phest/blob/master/exampl
 ### 3. Add to phpunit configuration XML the bootstrap file
 ```xml
 // /path/to/phalcon/project/tests/phpunit.xml
-
-<?xml version="1.0" encoding="UTF-8"?>
 <phpunit  .....
          bootstrap="path/tophalcon/project/bootstrap.php"
          .....
@@ -74,7 +71,6 @@ An example for [phpunit.xml](https://github.com/cosma/phest/blob/master/examples
 ```php
 // /path/to/phalcon/project/tests/config.php
 
-<?php
 return new \Phalcon\Config([
     'someConfigVariable' => 'some value',
 ]);
