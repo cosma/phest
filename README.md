@@ -29,7 +29,7 @@ I recommend to use more stable version tags if available.
 
 ### 2. Add a bootstrap.php file to Phalcon project tests directory
 ```php
-// /path/to/phalcon/project/tests/bootstrap.php
+# /path/to/phalcon/project/tests/bootstrap.php
 
  /**
  * Define TEST_PATH to point to path/to/phalcon/project/tests/
@@ -57,7 +57,7 @@ An example for [bootstrap.php](https://github.com/cosma/phest/blob/master/exampl
 
 ### 3. Add to phpunit configuration XML the bootstrap file
 ```xml
-// /path/to/phalcon/project/tests/phpunit.xml
+# /path/to/phalcon/project/tests/phpunit.xml
 <phpunit  .....
          bootstrap="path/tophalcon/project/bootstrap.php"
          .....
@@ -69,7 +69,7 @@ An example for [phpunit.xml](https://github.com/cosma/phest/blob/master/examples
 
 ### Optionally, you can add a config.php that is merged with you Phalcon project configs
 ```php
-// /path/to/phalcon/project/tests/config.php
+# /path/to/phalcon/project/tests/config.php
 
 return new \Phalcon\Config([
     'someConfigVariable' => 'some value',
