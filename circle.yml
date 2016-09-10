@@ -27,7 +27,8 @@ dependencies:
 
   cache_directories:
     - vendor
-    - ~/cphalcon
+    - cphalcon
+    - ~/.composer/cache
 
 test:
   override:

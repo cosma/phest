@@ -149,7 +149,7 @@ echo "memory_limit=-1" > ${PHP_CONF_DIR}/phalcon-ci-installer.ini
 phpenv global ${PHP_VER}
 
 # Clean parsers
-cd ${CI_APP_DIR}/vendor/phalcon/zephir/parser
+sudo cd ${CI_APP_DIR}/vendor/phalcon/zephir/parser
 phpize --clean
 
 # Compile

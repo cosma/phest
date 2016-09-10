@@ -19,8 +19,11 @@
         "mockery/mockery": "0.9.*"
     },
     "require-dev": {
-
+        "phalcon/zephir": "~0.9"
     },
+    "bin": [
+        "bin/install-phalcon.sh"
+    ],
     "autoload": {
         "psr-4": { "Cosma\\Phest\\": "" }
     },
