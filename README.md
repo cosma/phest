@@ -1,15 +1,11 @@
 Phest
 =====
 
-
 [![Circle CI](https://circleci.com/gh/cosma/phest.svg?style=svg)](https://circleci.com/gh/cosma/phest)
 
 
-
 Phalcon + Test = Phest.
-A test library for [Phalcon Framework](http://phalconphp.com) version 2.9.
-
-
+A test library for [Phalcon Framework](http://phalconphp.com).
 
 
 # Table of Contents
@@ -23,17 +19,73 @@ A test library for [Phalcon Framework](http://phalconphp.com) version 2.9.
 
 
 # Installation
-    
+
+### 1. Add Phest to composer.json
 ```bash
     $   php composer.phar require cosma/phest '0.0.*'
 ```
-Follow the 'dev-master' branch for latest dev version. But I recommend to use more stable version tags if available.
+Follow the 'dev-master' branch for latest dev version. 
+I recommend to use more stable version tags if available.
 
+### 2. Add a bootstrap.php file to Phalcon project tests directory
+```php
+// /path/to/phalcon/project/tests/bootstrap.php
+
+<?php
+ /**
+ * Define TEST_PATH to point to path/to/phalcon/project/tests/
+ */
+define('TEST_PATH', __DIR__ );
+
+/**
+ * Require Phest environment.php file
+ */
+require_once '/path/to/vendor/cosma/phest/environment.php';
+
+/**
+ * Get your application from your phalcon project
+ */    
+/** @var \Phalcon\Mvc\Micro|\Phalcon\Mvc\Application $app */
+$app = require_once __DIR__ . '/../src/init.php';
+
+
+ /**
+ * Require Phest library bootstrap.php file
+ */
+require_once '/path/to/vendor/cosma/phest/bootstrap.php';
+```
+An example for [bootstrap.php](https://github.com/cosma/phest/blob/master/examples/bootstrap.php)
+
+### 3. Add to phpunit configuration XML the bootstrap file
+```xml
+// /path/to/phalcon/project/tests/phpunit.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit  .....
+         bootstrap="path/tophalcon/project/bootstrap.php"
+         .....
+        >
+    ........
+</phpunit>
+```
+An example for [phpunit.xml](https://github.com/cosma/phest/blob/master/examples/phpunit.xml)
+
+### Optionally, you can add a config.php that is merged with you Phalcon project configs
+```php
+// /path/to/phalcon/project/tests/config.php
+
+<?php
+return new \Phalcon\Config([
+    'someConfigVariable' => 'some value',
+]);
+```
+An example for [config.php](https://github.com/cosma/phest/blob/master/examples/config.php)
 
 
 # Dependencies
 
-Phalcon PHP extension 2.0.13 must be installed. [Phalcon Extension](https://docs.phalconphp.com/uk/latest/reference/install.html)
+This test library is intended for projects using  Phalcon Framework version version 2.9.
+Therefore, PHP extension 2.0.13 must be installed. [Phalcon Extension](https://docs.phalconphp.com/uk/latest/reference/install.html)
 
 
 # Test Cases
@@ -47,7 +99,6 @@ Supports the following Test Cases:
 ## Unit Test Case
 
 This case is used for unit testing is an extension of PHPUnit_Framework_TestCase:
-
 
 ```php
 use Cosma\Phest\TestCase\UnitTestCase;
@@ -66,12 +117,10 @@ class SomeVerySimpleUnitTest extends UnitTestCase
  
 ## Web Test Case
 
-This case is used for functional and controller tests
-It has the following methods:
+This case is used for functional and controller tests and has the following methods:
 
 * **mockService** ($serviceName, $mock)
 * **getResponse** ($url = '', $requestMethod = 'GET', $parameters = [], $headers = [])
-
 
 ```php
 use Cosma\Phest\TestCase\WebTestCase;
