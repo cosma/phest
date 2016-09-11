@@ -22,7 +22,7 @@
         "techpivot/phalcon-ci-installer": "~1.0"
     },
     "autoload": {
-        "psr-4": { "Cosma\\Phest\\": "" }
+        "psr-4": { "Cosma\\Phest\\": "src/" }
     },
     "minimum-stability": "stable",
     "extra": {

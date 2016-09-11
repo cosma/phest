@@ -39,7 +39,7 @@ define('TEST_PATH', __DIR__ );
 /**
  * Require Phest environment.php file
  */
-require_once '/path/to/vendor/cosma/phest/environment.php';
+require_once '/path/to/vendor/cosma/phest/src/environment.php';
 
 /**
  * Get your application from your phalcon project
@@ -51,7 +51,7 @@ $app = require_once __DIR__ . '/../src/init.php';
  /**
  * Require Phest library bootstrap.php file
  */
-require_once '/path/to/vendor/cosma/phest/bootstrap.php';
+require_once '/path/to/vendor/cosma/phest/src/bootstrap.php';
 ```
 An example for [bootstrap.php](https://github.com/cosma/phest/blob/master/examples/bootstrap.php)
 
@@ -226,7 +226,7 @@ class SomeUnitTest extends UnitTestCase
 
 # Run Tests
 
-vendor/bin/phpunit -c phpunit.xml.dist --coverage-text --coverage-html=Tests/coverage Tests
+vendor/bin/phpunit -c phpunit.xml.dist --coverage-text --coverage-html=tests/coverage tests
 
 # License
 

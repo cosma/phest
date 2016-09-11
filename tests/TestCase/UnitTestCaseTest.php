@@ -43,7 +43,7 @@ class UnitTestCaseTest extends UnitTestCase
      */
     public function testGetTestClassPath()
     {
-        $this->assertContains('/Tests/TestCase/UnitTestCaseTest', $this->getTestClassPath());
+        $this->assertContains('/tests/TestCase/UnitTestCaseTest', $this->getTestClassPath());
     }
 
     /**
