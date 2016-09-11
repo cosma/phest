@@ -102,8 +102,6 @@ class UnitTestCaseTest extends UnitTestCase
 
     /**
      * @covers \Cosma\Phest\TestCase\UnitTestCase::runBare()
-     *
-     *
      */
     public function testRunBare_ClassRetry()
     {

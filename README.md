@@ -226,7 +226,7 @@ class SomeUnitTest extends UnitTestCase
 
 # Run Tests
 
-vendor/bin/phpunit -c phpunit.xml.dist --coverage-text --coverage-html=tests/coverage tests
+vendor/bin/phpunit -c phpunit.xml --coverage-text --coverage-html=tests/coverage tests
 
 # License
 

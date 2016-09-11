@@ -16,26 +16,6 @@ use Phalcon\Config;
 
 abstract class UnitTestCase extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var \Phalcon\Config
-     */
-    protected $config;
-
-    /**
-     * @var bool
-     */
-    private $loaded = false;
-
-    /**
-     * @param DiInterface|null $di
-     * @param Config|null $config
-     */
-    protected function setUp(DiInterface $di = null, Config $config = null)
-    {
-        parent::setUp();
-        $this->loaded = true;
-    }
-
 
     /**
      * @return void
@@ -121,17 +101,5 @@ abstract class UnitTestCase extends \PHPUnit_Framework_TestCase
         }
 
         return 0;
-    }
-
-    /**
-     * Check if the test case is setup properly
-     *
-     * @throws \PHPUnit_Framework_IncompleteTestError;
-     */
-    public function __destruct()
-    {
-        if (!$this->loaded) {
-            throw new \PHPUnit_Framework_IncompleteTestError('Please run parent::setUp().');
-        }
     }
 }

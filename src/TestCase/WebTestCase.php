@@ -20,6 +20,11 @@ use Phalcon\Http\ResponseInterface;
 
 abstract class WebTestCase extends UnitTestCase
 {
+    /**
+     * @var bool
+     */
+    private $loaded = false;
+
     protected static $availableRequestMethods = [
         'GET',
         'POST',
@@ -31,13 +36,12 @@ abstract class WebTestCase extends UnitTestCase
     ];
 
     /**
-     * @param \Phalcon\DiInterface|null $di
-     * @param \Phalcon\Config|null $config
+     *
      */
-    protected function setUp(DiInterface $di = null, Config $config = null)
+    protected function setUp()
     {
-        parent::setUp($di, $config);
-
+        parent::setUp();
+        $this->loaded = true;
         $this->cleanUp();
     }
 
@@ -50,6 +54,18 @@ abstract class WebTestCase extends UnitTestCase
         $this->cleanUpRequestMethod();
         $this->cleanUpParameters();
         $this->cleanUpHeaders();
+    }
+
+    /**
+     * Check if the test case is setup properly
+     *
+     * @throws \PHPUnit_Framework_IncompleteTestError;
+     */
+    public function __destruct()
+    {
+        if (!$this->loaded) {
+            throw new \PHPUnit_Framework_IncompleteTestError('Please run parent::setUp().');
+        }
     }
 
     /**
