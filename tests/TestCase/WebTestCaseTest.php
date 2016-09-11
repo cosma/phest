@@ -18,15 +18,33 @@ use Cosma\Phest\TestCase\WebTestCase;
  */
 class WebTestCaseTest extends WebTestCase
 {
-
-
     /**
      * @covers \Cosma\Phest\TestCase\UnitTestCase::getTestClassPath()
      */
-    public function testGetTestClassPath()
+    public function testCleanUp()
     {
-        $this->assertContains('/tests/TestCase/WebTestCaseTest', $this->getTestClassPath());
+        $_SERVER['REQUEST_URI']      = 'REQUEST_URI';
+        $_SERVER['REQUEST_METHOD']   = 'REQUEST_METHOD';
+        $GLOBALS['_GET']             = [1, 2, 3];
+        $GLOBALS['_POST']             = [1, 2, 3];
+        $GLOBALS['_PUT']              = [1, 2, 3];
+        $GLOBALS['_HEAD']             = [1, 2, 3];
+        $GLOBALS['_PATCH']            = [1, 2, 3];
+        $GLOBALS['_DELETE']           = [1, 2, 3];
+        $GLOBALS['_OPTIONS']          = [1, 2, 3];
+        $_SERVER['HTTP_SOME_HEADER'] = 'some value';
+
+        $this->cleanUp();
+
+        $this->assertEmpty($_SERVER['REQUEST_URI']);
+        $this->assertEmpty($_SERVER['REQUEST_METHOD']);
+        $this->assertEmpty($GLOBALS['_GET']);
+        $this->assertEmpty($GLOBALS['_POST']);
+        $this->assertEmpty($GLOBALS['_PUT']);
+        $this->assertEmpty($GLOBALS['_HEAD']);
+        $this->assertEmpty($GLOBALS['_PATCH']);
+        $this->assertEmpty($GLOBALS['_DELETE']);
+        $this->assertEmpty($GLOBALS['_OPTIONS']);
+        $this->assertArrayNotHasKey('HTTP_SOME_HEADER', $_SERVER);
     }
-
-
 }

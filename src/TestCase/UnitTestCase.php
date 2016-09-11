@@ -11,12 +11,8 @@
 
 namespace Cosma\Phest\TestCase;
 
-use Phalcon\DiInterface;
-use Phalcon\Config;
-
 abstract class UnitTestCase extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @return void
      */
@@ -26,7 +22,6 @@ abstract class UnitTestCase extends \PHPUnit_Framework_TestCase
 
         \Mockery::close();
     }
-
 
     /**
      * @return mixed|string
