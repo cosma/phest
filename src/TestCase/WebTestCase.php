@@ -11,20 +11,17 @@
 
 namespace Cosma\Phest\TestCase;
 
-use Phalcon\Di;
-use Phalcon\DiInterface;
-use Phalcon\DI\ServiceInterface;
-use Phalcon\Config;
 use Phalcon\Http\Response;
 use Phalcon\Http\ResponseInterface;
+use Phalcon\Mvc\Micro;
+use Phalcon\Mvc\Application;
 
 abstract class WebTestCase extends UnitTestCase
 {
-    /**
-     * @var bool
-     */
-    private $loaded = false;
 
+    /**
+     * @var array
+     */
     protected static $availableRequestMethods = [
         'GET',
         'POST',
@@ -36,24 +33,34 @@ abstract class WebTestCase extends UnitTestCase
     ];
 
     /**
+     * @var Micro|Application
+     */
+    protected $app;
+
+    /**
+     * @var bool
+     */
+    private $loadedApp = false;
+
+    /**
      *
      */
     protected function setUp()
     {
         parent::setUp();
-        $this->loaded = true;
-        $this->cleanUp();
-    }
 
-    /**
-     * Main Clean Up function
-     */
-    public function cleanUp()
-    {
-        $this->cleanUpUri();
-        $this->cleanUpRequestMethod();
-        $this->cleanUpParameters();
-        $this->cleanUpHeaders();
+        $this->cleanUp();
+
+        /** @var Micro|Application $app */
+        $app = $this->getDi()->get('_testApp');
+
+        if (!($app instanceof Micro || $app instanceof Application)) {
+            throw new \PHPUnit_Framework_IncompleteTestError("_testApp of DI container should be set to a Phalcon\\Mvc\\Micro or Phalcon\\Mvc\\Application object.");
+        }
+
+        $this->setApp($app);
+
+        $this->loadedApp = true;
     }
 
     /**
@@ -61,9 +68,9 @@ abstract class WebTestCase extends UnitTestCase
      *
      * @throws \PHPUnit_Framework_IncompleteTestError;
      */
-    public function __destruct()
+    protected function __destruct()
     {
-        if (!$this->loaded) {
+        if (!$this->loadedApp) {
             throw new \PHPUnit_Framework_IncompleteTestError('Please run parent::setUp().');
         }
     }
@@ -76,7 +83,7 @@ abstract class WebTestCase extends UnitTestCase
      *
      * @return Response|ResponseInterface
      */
-    protected function getResponse($url = '', $requestMethod = 'GET', $parameters = [], $headers = [])
+    protected function sendRequest($url = '', $requestMethod = 'GET', $parameters = [], $headers = [])
     {
         $this->cleanUp();
 
@@ -87,22 +94,36 @@ abstract class WebTestCase extends UnitTestCase
         $this->setParameters($requestMethod, $parameters);
         $this->setHeaders($headers);
 
-        /** @var \Phalcon\Mvc\Micro|\Phalcon\Mvc\Application $app */
-        $app = Di::getDefault()->get('_testApp');
-        $app->handle($url);
+        $app = $this->getApp()->handle($url);
 
         return $app->response;
     }
 
     /**
-     * @param $serviceName
-     * @param $mock
-     *
-     * @return ServiceInterface
+     * @return Application|Micro
      */
-    protected function mockService($serviceName, $mock)
+    public function getApp()
     {
-        return Di::getDefault()->set($serviceName, $mock);
+        return $this->app;
+    }
+
+    /**
+     * @param Application|Micro $app
+     */
+    public function setApp($app)
+    {
+        $this->app = $app;
+    }
+
+    /**
+     * Main Clean Up function
+     */
+    protected function cleanUp()
+    {
+        $this->cleanUpUri();
+        $this->cleanUpRequestMethod();
+        $this->cleanUpParameters();
+        $this->cleanUpHeaders();
     }
 
     /**
@@ -194,5 +215,4 @@ abstract class WebTestCase extends UnitTestCase
             $_SERVER['HTTP_' . strtoupper($key)] = $item;
         });
     }
-
 }

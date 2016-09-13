@@ -11,8 +11,50 @@
 
 namespace Cosma\Phest\TestCase;
 
+use Phalcon\Di;
+use Phalcon\DiInterface;
+use Phalcon\Di\ServiceInterface;
+
 abstract class UnitTestCase extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var DiInterface
+     */
+    protected $di;
+
+    /**
+     * @var bool
+     */
+    private $loadedDI = false;
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $di = Di::getDefault();
+
+        if (!($di instanceof DiInterface)) {
+            throw new \PHPUnit_Framework_IncompleteTestError('Di::getDefault() should return a Phalcon\DiInterface object.');
+        }
+
+        $this->setDi($di);
+
+        $this->loadedDI = true;
+    }
+
+    /**
+     * Check if the test case is setup properly
+     *
+     * @throws \PHPUnit_Framework_IncompleteTestError;
+     */
+    protected function __destruct()
+    {
+        if (!$this->loadedDI) {
+            throw new \PHPUnit_Framework_IncompleteTestError('Please run parent::setUp().');
+        }
+    }
+
+
     /**
      * @return void
      */
@@ -21,6 +63,34 @@ abstract class UnitTestCase extends \PHPUnit_Framework_TestCase
         parent::tearDown();
 
         \Mockery::close();
+    }
+
+    /**
+     * @return DiInterface
+     */
+    protected function getDi()
+    {
+        return $this->di;
+    }
+
+    /**
+     * @param DiInterface $di
+     */
+    protected function setDi( DiInterface $di)
+    {
+        $this->di = $di;
+    }
+
+
+    /**
+     * @param $serviceName
+     * @param $mock
+     *
+     * @return ServiceInterface
+     */
+    protected function mockService($serviceName, $mock)
+    {
+        return $this->getDi()->set($serviceName, $mock);
     }
 
     /**

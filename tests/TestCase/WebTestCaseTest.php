@@ -19,7 +19,7 @@ use Cosma\Phest\TestCase\WebTestCase;
 class WebTestCaseTest extends WebTestCase
 {
     /**
-     * @covers \Cosma\Phest\TestCase\UnitTestCase::getTestClassPath()
+     * @covers \Cosma\Phest\TestCase\WebTestCase::cleanUp()
      */
     public function testCleanUp()
     {
@@ -46,5 +46,13 @@ class WebTestCaseTest extends WebTestCase
         $this->assertEmpty($GLOBALS['_DELETE']);
         $this->assertEmpty($GLOBALS['_OPTIONS']);
         $this->assertArrayNotHasKey('HTTP_SOME_HEADER', $_SERVER);
+    }
+
+    /**
+     * @covers \Cosma\Phest\TestCase\WebTestCase::mockService()
+     */
+    public function testMockService()
+    {
+        $di = Di::getDefault();
     }
 }
