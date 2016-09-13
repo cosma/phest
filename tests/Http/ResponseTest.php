@@ -12,18 +12,9 @@
 namespace Cosma\Phest\Tests\Http;
 
 use Cosma\Phest\Http\Response;
-use Cosma\Phest\TestCase\UnitTestCase;
-use Phalcon\Config;
-use Phalcon\DiInterface;
 
-class ResponseTest extends UnitTestCase
+class ResponseTest extends \PHPUnit_Framework_TestCase
 {
-    protected function setUp(DiInterface $di = null, Config $config = null)
-    {
-        parent::setUp(null, null);
-    }
-
-
     /**
      * @covers \Cosma\Phest\Http\Response::send()
      */

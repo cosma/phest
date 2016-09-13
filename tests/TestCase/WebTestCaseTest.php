@@ -12,12 +12,24 @@
 namespace Cosma\Phest\Tests\TestCase;
 
 use Cosma\Phest\TestCase\WebTestCase;
+use Phalcon\DI;
+use Phalcon\Di\FactoryDefault;
+use Phalcon\Mvc\Micro;
 
 /**
  * @retry 6
  */
 class WebTestCaseTest extends WebTestCase
 {
+
+    protected function setUp()
+    {
+        DI::setDefault(new FactoryDefault());
+        DI::getDefault()->set('_testApp', new Micro());
+
+        parent::setUp();
+    }
+
     /**
      * @covers \Cosma\Phest\TestCase\WebTestCase::cleanUp()
      */
@@ -48,11 +60,11 @@ class WebTestCaseTest extends WebTestCase
         $this->assertArrayNotHasKey('HTTP_SOME_HEADER', $_SERVER);
     }
 
-    /**
-     * @covers \Cosma\Phest\TestCase\WebTestCase::mockService()
-     */
-    public function testMockService()
-    {
-        $di = Di::getDefault();
-    }
+//    /**
+//     * @covers \Cosma\Phest\TestCase\WebTestCase::mockService()
+//     */
+//    public function testMockService()
+//    {
+//        //$di = Di::getDefault();
+//    }
 }

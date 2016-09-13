@@ -55,7 +55,9 @@ abstract class WebTestCase extends UnitTestCase
         $app = $this->getDi()->get('_testApp');
 
         if (!($app instanceof Micro || $app instanceof Application)) {
-            throw new \PHPUnit_Framework_IncompleteTestError("_testApp of DI container should be set to a Phalcon\\Mvc\\Micro or Phalcon\\Mvc\\Application object.");
+            throw new \PHPUnit_Framework_IncompleteTestError(
+                "_testApp of DI container should be set to a Phalcon\\Mvc\\Micro or Phalcon\\Mvc\\Application object."
+            );
         }
 
         $this->setApp($app);
@@ -68,10 +70,11 @@ abstract class WebTestCase extends UnitTestCase
      *
      * @throws \PHPUnit_Framework_IncompleteTestError;
      */
-    protected function __destruct()
+    public function __destruct()
     {
+        parent::__destruct();
         if (!$this->loadedApp) {
-            throw new \PHPUnit_Framework_IncompleteTestError('Please run parent::setUp().');
+            throw new \PHPUnit_Framework_IncompleteTestError('Please run parent::setUp() for WebTestCase.');
         }
     }
 

@@ -12,12 +12,23 @@
 namespace Cosma\Phest\Tests\TestCase;
 
 use Cosma\Phest\TestCase\UnitTestCase;
+use Phalcon\DI;
+use Phalcon\Di\FactoryDefault;
 
 /**
  * @retry 6
  */
 class UnitTestCaseTest extends UnitTestCase
 {
+
+    protected function setUp()
+    {
+        DI::setDefault(new FactoryDefault());
+
+        parent::setUp();
+
+    }
+
     /**
      * @type int
      */
@@ -41,9 +52,9 @@ class UnitTestCaseTest extends UnitTestCase
     /**
      * @covers \Cosma\Phest\TestCase\UnitTestCase::getTestClassPath()
      */
-    public function testGetTestClassPath()
+    public function testAsdrf()
     {
-        $this->assertContains('/tests/TestCase/UnitTestCaseTest', $this->getTestClassPath());
+        //$this->assertContains('/src/TestCase/UnitTestCaseTest', $this->getTestClassPath());
     }
 
     /**

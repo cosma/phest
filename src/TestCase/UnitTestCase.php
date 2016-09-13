@@ -20,7 +20,7 @@ abstract class UnitTestCase extends \PHPUnit_Framework_TestCase
     /**
      * @var DiInterface
      */
-    protected $di;
+    private $di;
 
     /**
      * @var bool
@@ -34,7 +34,9 @@ abstract class UnitTestCase extends \PHPUnit_Framework_TestCase
         $di = Di::getDefault();
 
         if (!($di instanceof DiInterface)) {
-            throw new \PHPUnit_Framework_IncompleteTestError('Di::getDefault() should return a Phalcon\DiInterface object.');
+            throw new \PHPUnit_Framework_IncompleteTestError(
+                'Di::getDefault() should return a Phalcon\DiInterface object.'
+            );
         }
 
         $this->setDi($di);
@@ -47,10 +49,10 @@ abstract class UnitTestCase extends \PHPUnit_Framework_TestCase
      *
      * @throws \PHPUnit_Framework_IncompleteTestError;
      */
-    protected function __destruct()
+    public function __destruct()
     {
         if (!$this->loadedDI) {
-            throw new \PHPUnit_Framework_IncompleteTestError('Please run parent::setUp().');
+            throw new \PHPUnit_Framework_IncompleteTestError('Please run parent::setUp() for UnitTestCase.');
         }
     }
 
