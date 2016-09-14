@@ -17,6 +17,8 @@ use Phalcon\Di\FactoryDefault;
 use Phalcon\Mvc\Micro;
 
 /**
+ * @covers \Cosma\Phest\TestCase\WebTestCase <extended>
+ *
  * @retry 6
  */
 class WebTestCaseTest extends WebTestCase

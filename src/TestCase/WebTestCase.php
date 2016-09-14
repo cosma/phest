@@ -38,11 +38,6 @@ abstract class WebTestCase extends UnitTestCase
     protected $app;
 
     /**
-     * @var bool
-     */
-    private $loadedApp = false;
-
-    /**
      *
      */
     protected function setUp()
@@ -61,8 +56,6 @@ abstract class WebTestCase extends UnitTestCase
         }
 
         $this->setApp($app);
-
-        $this->loadedApp = true;
     }
 
     /**
@@ -73,8 +66,8 @@ abstract class WebTestCase extends UnitTestCase
     public function __destruct()
     {
         parent::__destruct();
-        if (!$this->loadedApp) {
-            throw new \PHPUnit_Framework_IncompleteTestError('Please run parent::setUp() for WebTestCase.');
+        if (!($this->getApp() instanceof Micro || $this->getApp() instanceof Application)) {
+            throw new \PHPUnit_Framework_IncompleteTestError('Please run Cosma\Phest\TestCase\WebTestCase::setUp()');
         }
     }
 
