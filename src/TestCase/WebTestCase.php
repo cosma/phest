@@ -46,12 +46,19 @@ abstract class WebTestCase extends UnitTestCase
 
         $this->cleanUp();
 
+        if (!$this->getDi()->has('_testApp')) {
+            throw new \PHPUnit_Framework_IncompleteTestError(
+                '_testApp service of DI should be set'
+            );
+        }
+
+
         /** @var Micro|Application $app */
         $app = $this->getDi()->get('_testApp');
 
         if (!($app instanceof Micro || $app instanceof Application)) {
             throw new \PHPUnit_Framework_IncompleteTestError(
-                "_testApp of DI container should be set to a Phalcon\\Mvc\\Micro or Phalcon\\Mvc\\Application object."
+                '_testApp service of DI should be set to a Phalcon\Mvc\Micro or Phalcon\Mvc\Application object'
             );
         }
 
@@ -77,7 +84,7 @@ abstract class WebTestCase extends UnitTestCase
      * @param array $parameters
      * @param array $headers
      *
-     * @return Response|ResponseInterface
+     * @return ResponseInterface
      */
     protected function sendRequest($url = '', $requestMethod = 'GET', $parameters = [], $headers = [])
     {
@@ -90,9 +97,13 @@ abstract class WebTestCase extends UnitTestCase
         $this->setParameters($requestMethod, $parameters);
         $this->setHeaders($headers);
 
-        $app = $this->getApp()->handle($url);
+        /** @var Response|boolean|string $response */
+        $response = $this->getApp()->handle($url);
 
-        return $app->response;
+        if (isset($response->response)) {
+            return $response->response;
+        }
+        return $response;
     }
 
     /**

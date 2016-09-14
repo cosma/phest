@@ -28,7 +28,6 @@ class UnitTestCaseTest extends UnitTestCase
         DI::setDefault(new FactoryDefault());
 
         parent::setUp();
-
     }
 
     /**
@@ -66,12 +65,10 @@ class UnitTestCaseTest extends UnitTestCase
      */
     public function testSetUp()
     {
-        $this->assertContains('/tests/TestCase/UnitTestCaseTest', $this->getTestClassPath());
         $this->assertInstanceOf('Phalcon\DiInterface', $this->getDi());
     }
 
     /**
-     *
      * @covers \Cosma\Phest\TestCase\UnitTestCase::setUp()
      *
      * @expectedException \PHPUnit_Framework_IncompleteTestError

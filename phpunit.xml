@@ -26,6 +26,8 @@
         <whitelist>
             <directory>./</directory>
             <exclude>
+                <file>./src/bootstrap.php</file>
+                <file>./src/environment.php</file>
                 <directory>./vendor</directory>
                 <directory>./examples</directory>
                 <directory>./tests</directory>
