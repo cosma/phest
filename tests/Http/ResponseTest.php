@@ -13,6 +13,9 @@ namespace Cosma\Phest\Tests\Http;
 
 use Cosma\Phest\Http\Response;
 
+/**
+ * @covers \Cosma\Phest\Http\Response <extended>
+ */
 class ResponseTest extends \PHPUnit_Framework_TestCase
 {
     /**

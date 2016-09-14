@@ -20,12 +20,7 @@ abstract class UnitTestCase extends \PHPUnit_Framework_TestCase
     /**
      * @var DiInterface
      */
-    private $di;
-
-    /**
-     * @var bool
-     */
-    private $loadedDI = false;
+    protected $di;
 
     protected function setUp()
     {
@@ -40,8 +35,6 @@ abstract class UnitTestCase extends \PHPUnit_Framework_TestCase
         }
 
         $this->setDi($di);
-
-        $this->loadedDI = true;
     }
 
     /**
@@ -51,11 +44,10 @@ abstract class UnitTestCase extends \PHPUnit_Framework_TestCase
      */
     public function __destruct()
     {
-        if (!$this->loadedDI) {
-            throw new \PHPUnit_Framework_IncompleteTestError('Please run parent::setUp() for UnitTestCase.');
+        if (!($this->getDi() instanceof DiInterface)) {
+            throw new \PHPUnit_Framework_IncompleteTestError('Please run Cosma\Phest\TestCase\UnitTestCase::setUp()');
         }
     }
-
 
     /**
      * @return void

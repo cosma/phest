@@ -16,6 +16,8 @@ use Phalcon\DI;
 use Phalcon\Di\FactoryDefault;
 
 /**
+ * @covers \Cosma\Phest\TestCase\UnitTestCase <extended>
+ *
  * @retry 6
  */
 class UnitTestCaseTest extends UnitTestCase
@@ -27,6 +29,16 @@ class UnitTestCaseTest extends UnitTestCase
 
         parent::setUp();
 
+    }
+
+    /**
+     * @return void
+     */
+    protected function tearDown()
+    {
+        $this->setDi(new FactoryDefault());
+
+        parent::tearDown();
     }
 
     /**
@@ -50,11 +62,105 @@ class UnitTestCaseTest extends UnitTestCase
     private static $counterForthTest = 0;
 
     /**
+     * @covers \Cosma\Phest\TestCase\UnitTestCase::setUp()
+     */
+    public function testSetUp()
+    {
+        $this->assertContains('/tests/TestCase/UnitTestCaseTest', $this->getTestClassPath());
+        $this->assertInstanceOf('Phalcon\DiInterface', $this->getDi());
+    }
+
+    /**
+     *
+     * @covers \Cosma\Phest\TestCase\UnitTestCase::setUp()
+     *
+     * @expectedException \PHPUnit_Framework_IncompleteTestError
+     * @expectedExceptionMessage Di::getDefault() should return a Phalcon\DiInterface object.
+     */
+    public function testSetUp_exception()
+    {
+        DI::reset();
+
+        parent::setUp();
+    }
+
+    /**
+     * @covers \Cosma\Phest\TestCase\UnitTestCase::__destruct()
+     */
+    public function testDestruct_Normal()
+    {
+        $this->__destruct();
+
+    }
+
+    /**
+     * @covers \Cosma\Phest\TestCase\UnitTestCase::__destruct()
+     *
+     * @expectedException \PHPUnit_Framework_IncompleteTestError
+     * @expectedExceptionMessage Please run Cosma\Phest\TestCase\UnitTestCase::setUp()
+     */
+    public function testDestruct_Exception()
+    {
+        $this->di = null;
+        $this->__destruct();
+    }
+
+    /**
+     * @covers \Cosma\Phest\TestCase\UnitTestCase::tearDown()
+     *
+     * @expectedException \LogicException
+     * @expectedExceptionMessage You have not declared any mocks yet
+     */
+    public function testTearDown()
+    {
+        $this->tearDown();
+
+        \Mockery::self();
+    }
+
+
+    /**
+     * @covers \Cosma\Phest\TestCase\UnitTestCase::mockService()
+     */
+    public function testMockService()
+    {
+        $originalRouterService = $this->getDi()->get('router');
+        $this->assertInstanceOf('\Phalcon\Mvc\Router', $originalRouterService);
+        $this->assertEquals(
+            [
+                'namespace' => '',
+                'module' => '',
+                'controller' => '',
+                'action' => '',
+                'params' => []
+            ],
+            $originalRouterService->getDefaults()
+        );
+
+        $mock = $this->getMockBuilder('\Phalcon\Mvc\Router')
+            ->disableOriginalConstructor()
+            ->setMethods(['getDefaults'])
+            ->getMock();
+        $mock
+            ->method('getDefaults')
+            ->willReturn(['cosma' => 'test']);
+
+
+        $this->mockService('router', $mock);
+
+        $mockedRouterService = $this->getDi()->get('router');
+
+        $this->assertInstanceOf('\Phalcon\Mvc\Router', $mockedRouterService);
+        $this->assertEquals(['cosma' => 'test'], $mockedRouterService->getDefaults());
+
+    }
+
+    /**
      * @covers \Cosma\Phest\TestCase\UnitTestCase::getTestClassPath()
      */
-    public function testAsdrf()
+    public function testGetTestClassPath()
     {
-        //$this->assertContains('/src/TestCase/UnitTestCaseTest', $this->getTestClassPath());
+        $this->assertContains('/tests/TestCase/UnitTestCaseTest', $this->getTestClassPath());
     }
 
     /**
