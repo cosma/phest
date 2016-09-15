@@ -26,4 +26,4 @@ dependencies:
 test:
   override:
     - mkdir -p $CIRCLE_TEST_REPORTS/phpunit
-    - vendor/bin/phpunit -c phpunit.xml.dist --coverage-text --log-junit $CIRCLE_TEST_REPORTS/phpunit/junit.xml
+    - vendor/bin/phpunit -c phpunit.xml --coverage-text --log-junit $CIRCLE_TEST_REPORTS/phpunit/junit.xml
