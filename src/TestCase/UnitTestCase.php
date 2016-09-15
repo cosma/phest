@@ -111,25 +111,28 @@ abstract class UnitTestCase extends \PHPUnit_Framework_TestCase
      */
     public function runBare()
     {
-        for ($i = 0; $i <= $this->getNumberOfRetries(); $i++) {
+        $i = 0;
+
+        while($i <= $this->getNumberOfRetries()){
             try {
                 if ($i > 0) {
                     //purple on yellow background colour
                     echo "\033[35m\033[43mR\033[0m";
                 }
                 parent::runBare();
-
                 return;
             } catch (\Exception $exception) {
+                $i++;
             }
         }
-        if (isset($exception) && $exception) {
+        if (isset($exception) && $exception instanceof  \Exception) {
             throw $exception;
         }
     }
 
     /**
      * @return int
+     *
      */
     private function getNumberOfRetries()
     {

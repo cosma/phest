@@ -16,24 +16,20 @@ use Cosma\Phest\TestCase\WebTestCase;
 use Phalcon\DI;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Http\Response\Headers;
-use Phalcon\Mvc\Application;
 use Phalcon\Mvc\Micro;
-use Phalcon\Mvc\Url;
-use Phalcon\Mvc\View;
 
 /**
  * @covers \Cosma\Phest\TestCase\WebTestCase <extended>
+ *
+ * @retry  shouldBeInteger
  */
 class WebTestCaseTest extends WebTestCase
 {
-
     protected function setUp()
     {
         DI::setDefault(new FactoryDefault());
         DI::getDefault()->set('_testApp', new Micro());
         parent::setUp();
-
-
     }
 
     protected function tearDown()
@@ -145,10 +141,10 @@ class WebTestCaseTest extends WebTestCase
             return new Response();
         });
 
-        $this->getApp()->post('/url_to_send', function(){
+        $this->getApp()->post('/url_to_send', function () {
 
             $headers = new Headers();
-            foreach($this->getRequestHeaders() as $key =>$value){
+            foreach ($this->getRequestHeaders() as $key => $value) {
                 $headers->set($key, $value);
             }
 
@@ -182,10 +178,10 @@ class WebTestCaseTest extends WebTestCase
         /** @var Micro $app */
         $app = $this->getApp();
 
-        $app->get('/url_to_send', function(){
+        $app->get('/url_to_send', function () {
 
             $headers = new Headers();
-            foreach($this->getRequestHeaders() as $key =>$value){
+            foreach ($this->getRequestHeaders() as $key => $value) {
                 $headers->set($key, $value);
             }
 
@@ -220,10 +216,10 @@ class WebTestCaseTest extends WebTestCase
         /** @var Micro $app */
         $app = $this->getApp();
 
-        $app->put('/url_to_send', function(){
+        $app->put('/url_to_send', function () {
 
             $headers = new Headers();
-            foreach($this->getRequestHeaders() as $key =>$value){
+            foreach ($this->getRequestHeaders() as $key => $value) {
                 $headers->set($key, $value);
             }
 
@@ -249,13 +245,39 @@ class WebTestCaseTest extends WebTestCase
         $this->assertEquals(['Header1' => 'headerValue1', 'Header2' => 'headerValue2'], $response->getHeaders()->toArray());
     }
 
-    private function getRequestHeaders() {
+    /**
+     * @covers \Cosma\Phest\TestCase\UnitTestCase::runBare()
+     *
+     * @expectedException \Exception
+     * @expectedExceptionMessage This test needs to fail even after 1 retry
+     */
+    public function testRunBare_RetryClass()
+    {
+        throw new \Exception('This test needs to fail even after 1 retry');
+    }
+
+
+    /**
+     * @covers \Cosma\Phest\TestCase\UnitTestCase::runBare()
+     *
+     * @retry  shouldBeInteger
+     *
+     * @expectedException \Exception
+     * @expectedExceptionMessage This test needs to fail even after 1 retry
+     */
+    public function testRunBare_RetryMethod()
+    {
+        throw new \Exception('This test needs to fail even after 1 retry');
+    }
+
+    private function getRequestHeaders()
+    {
         $headers = array();
-        foreach($_SERVER as $key => $value) {
+        foreach ($_SERVER as $key => $value) {
             if (substr($key, 0, 5) <> 'HTTP_') {
                 continue;
             }
-            $header = str_replace(' ', '-', ucwords(str_replace('_', ' ', strtolower(substr($key, 5)))));
+            $header           = str_replace(' ', '-', ucwords(str_replace('_', ' ', strtolower(substr($key, 5)))));
             $headers[$header] = $value;
         }
         return $headers;

@@ -22,24 +22,6 @@ use Phalcon\Di\FactoryDefault;
  */
 class UnitTestCaseTest extends UnitTestCase
 {
-
-    protected function setUp()
-    {
-        DI::setDefault(new FactoryDefault());
-
-        parent::setUp();
-    }
-
-    /**
-     * @return void
-     */
-    protected function tearDown()
-    {
-        $this->setDi(new FactoryDefault());
-
-        parent::tearDown();
-    }
-
     /**
      * @type int
      */
@@ -59,6 +41,20 @@ class UnitTestCaseTest extends UnitTestCase
      * @type int
      */
     private static $counterForthTest = 0;
+
+    protected function setUp()
+    {
+        DI::setDefault(new FactoryDefault());
+
+        parent::setUp();
+    }
+
+    protected function tearDown()
+    {
+        $this->setDi(new FactoryDefault());
+
+        parent::tearDown();
+    }
 
     /**
      * @covers \Cosma\Phest\TestCase\UnitTestCase::setUp()
@@ -226,5 +222,19 @@ class UnitTestCaseTest extends UnitTestCase
         } else {
             throw new \Exception('This test needs at least 6 retries');
         }
+    }
+
+
+    /**
+     * @covers \Cosma\Phest\TestCase\UnitTestCase::runBare()
+     *
+     * @retry  shouldBeInteger
+     *
+     * @expectedException \Exception
+     * @expectedExceptionMessage This test needs to fail even after 1 retry
+     */
+    public function testRunBare_ALwaysFailing()
+    {
+        throw new \Exception('This test needs to fail even after 1 retry');
     }
 }
