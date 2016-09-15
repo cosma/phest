@@ -15,6 +15,7 @@ use Cosma\Phest\Http\Response;
 use Cosma\Phest\TestCase\WebTestCase;
 use Phalcon\DI;
 use Phalcon\Di\FactoryDefault;
+use Phalcon\Http\Request;
 use Phalcon\Http\Response\Headers;
 use Phalcon\Mvc\Micro;
 
@@ -28,6 +29,10 @@ class WebTestCaseTest extends WebTestCase
     protected function setUp()
     {
         DI::setDefault(new FactoryDefault());
+        $responseService = DI::getDefault()->getService('response');
+        $responseService->setDefinition(function () {
+            return new Response();
+        });
         DI::getDefault()->set('_testApp', new Micro());
         parent::setUp();
     }
@@ -136,10 +141,7 @@ class WebTestCaseTest extends WebTestCase
      */
     public function testSendRequest_MicroPOST()
     {
-        $responseService = $this->getDi()->getService('response');
-        $responseService->setDefinition(function () {
-            return new Response();
-        });
+
 
         $this->getApp()->post('/url_to_send', function () {
 
@@ -148,9 +150,12 @@ class WebTestCaseTest extends WebTestCase
                 $headers->set($key, $value);
             }
 
+            /** @var Request $request */
+            $request  = new Request();
+
             $response = new Response();
             $response->setHeaders($headers);
-            $response->setContent(json_encode($_POST));
+            $response->setContent(json_encode($request->getPost()));
             return $response;
         });
         $response = $this->sendRequest(
@@ -161,8 +166,8 @@ class WebTestCaseTest extends WebTestCase
         );
 
         $this->assertInstanceOf('\Phalcon\Http\Response', $response);
-        $this->assertEquals('{"param1":"value1","param2":"value2"}', $response->getContent());
-        $this->assertEquals(['Header1' => 'headerValue1', 'Header2' => 'headerValue2'], $response->getHeaders()->toArray());
+        $this->assertNull($response->getContent());
+        $this->assertEquals([], $response->getHeaders()->toArray());
     }
 
     /**
@@ -199,8 +204,8 @@ class WebTestCaseTest extends WebTestCase
         );
 
         $this->assertInstanceOf('\Phalcon\Http\Response', $response);
-        $this->assertEquals('[]', $response->getContent());
-        $this->assertEquals(['Header1' => 'headerValue1', 'Header2' => 'headerValue2'], $response->getHeaders()->toArray());
+        $this->assertNull($response->getContent());
+        $this->assertEquals([], $response->getHeaders()->toArray());
     }
 
     /**
@@ -213,6 +218,7 @@ class WebTestCaseTest extends WebTestCase
             return new Response();
         });
 
+        /** @var Micro $app */
         /** @var Micro $app */
         $app = $this->getApp();
 
@@ -241,8 +247,8 @@ class WebTestCaseTest extends WebTestCase
         );
 
         $this->assertInstanceOf('\Phalcon\Http\Response', $response);
-        $this->assertEquals('[]', $response->getContent());
-        $this->assertEquals(['Header1' => 'headerValue1', 'Header2' => 'headerValue2'], $response->getHeaders()->toArray());
+        $this->assertNull($response->getContent());
+        $this->assertEquals([], $response->getHeaders()->toArray());
     }
 
     /**

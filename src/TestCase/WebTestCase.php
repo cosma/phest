@@ -84,7 +84,7 @@ abstract class WebTestCase extends UnitTestCase
      * @param array $parameters
      * @param array $headers
      *
-     * @return ResponseInterface
+     * @return Response|ResponseInterface
      */
     protected function sendRequest($url = '', $requestMethod = 'GET', $parameters = [], $headers = [])
     {
@@ -97,13 +97,11 @@ abstract class WebTestCase extends UnitTestCase
         $this->setParameters($requestMethod, $parameters);
         $this->setHeaders($headers);
 
-        /** @var Response|boolean|string $response */
-        $response = $this->getApp()->handle($url);
+        $app = $this->getApp();
 
-        if (isset($response->response)) {
-            return $response->response;
-        }
-        return $response;
+        $app->handle($url);
+
+        return $app->response;
     }
 
     /**
