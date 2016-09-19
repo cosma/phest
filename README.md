@@ -117,7 +117,7 @@ class SomeVerySimpleUnitTest extends UnitTestCase
 This case is used for functional and controller tests and has the following methods:
 
 * **mockService** ($serviceName, $mock)
-* **getResponse** ($url = '', $requestMethod = 'GET', $parameters = [], $headers = [])
+* **sendRequest** ($url = '', $requestMethod = 'GET', $parameters = [], $headers = [])
 
 ```php
 use Cosma\Phest\TestCase\WebTestCase;
@@ -142,7 +142,7 @@ class SomeWebFunctionalTest extends WebTestCase
     public function testSomething()
     {
         /** @var \Phalcon\Http\Response $response */
-        $response = $this->getResponse(
+        $response = $this->sendRequest(
             '/test_endpoint', 'POST', ['test_var' => 'value'], ['Header1' => 223456789, 'Header2' => 'value2']);
 
         $this->assertInstanceOf('Phalcon\Http\Response', $response);
@@ -155,7 +155,7 @@ class SomeWebFunctionalTest extends WebTestCase
     public function testGetHealthCheck()
     {
         /** @var \Phalcon\Http\Response $response */
-        $response = $this->getResponse(
+        $response = $this->sendRequest(
             '/healthCheck', 'GET', [], []);
 
         $this->assertInstanceOf('Phalcon\Http\Response', $response);
